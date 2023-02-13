@@ -7,6 +7,9 @@
 FROM python:3.8-slim
 LABEL maintainer="Kitware, Inc. <kitware@kitware.com>"
 
+RUN useradd -r -u 1001 -g appuser appuser
+USER appuser
+
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends \
     # For installing pip \
