@@ -2,10 +2,6 @@
 
   "VirtualTrichrome": {
     "type"    : "python"
-  },
-
-  "NucleiDetection": {
-    "type"    : "python"
   }
-
+  
 }
