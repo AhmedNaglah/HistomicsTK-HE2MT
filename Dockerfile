@@ -7,8 +7,6 @@
 FROM python:3.8-slim
 LABEL maintainer="Kitware, Inc. <kitware@kitware.com>"
 
-RUN useradd -r -u 1001 -g appuser appuser
-USER appuser
 
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends \
@@ -27,6 +25,13 @@ RUN apt-get update && \
     # Clean up to reduce docker size \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ARG UNAME=testuser
+ARG UID=1001
+ARG GID=1001
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+USER $UNAME
 
 # Make a specific version of python the default and install pip
 # RUN rm -f /usr/bin/python && \
