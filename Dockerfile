@@ -26,12 +26,6 @@ RUN apt-get update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ARG UNAME=testuser
-ARG UID=1001
-ARG GID=1001
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-USER $UNAME
 
 # Make a specific version of python the default and install pip
 # RUN rm -f /usr/bin/python && \
@@ -77,6 +71,7 @@ RUN pip install --no-cache-dir . --find-links https://girder.github.io/large_ima
     pip install --no-cache-dir virtualenv && \
     rm -rf /root/.cache/pip/*
 
+
 # Show what was installed
 RUN pip freeze
 
@@ -93,6 +88,15 @@ RUN python -m slicer_cli_web.cli_list_entrypoint VirtualTrichrome --help
 # Debug import time
 RUN python -X importtime VirtualTrichrome/VirtualTrichrome.py --help
 
+
 ENV PYTHONUNBUFFERED=TRUE
+
+ARG UNAME=testuser
+ARG UID=1001
+ARG GID=1001
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+USER $UNAME
+
 
 ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
