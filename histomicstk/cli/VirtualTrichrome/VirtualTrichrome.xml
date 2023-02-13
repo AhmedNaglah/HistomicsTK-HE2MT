@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>HistomicsTK</category>
+  <title>Virtual Trichrome</title>
+  <description>Convert from hematoxylin and eosin stain to trichrome in a whole-slide image</description>
+  <version>0.1.0</version>
+  <documentation-url>https://digitalslidearchive.github.io/HistomicsTK/</documentation-url>
+  <license>Apache 2.0</license>
+  <contributor>Ahmed Naglah (University of Florida)</contributor>
+  <acknowledgements>Please cite: Naglah, A., Khalifa, F., El-Baz, A. and Gondim, D., 2022. Conditional GANs based system for fibrosis detection and quantification in Hematoxylin and Eosin whole slide images. Medical Image Analysis, 81, p.102537.</acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <description>Input/output parameters</description>
+    <image>
+      <name>inputImageFile</name>
+      <label>Input Image</label>
+      <description>Input image</description>
+      <channel>input</channel>
+      <index>0</index>
+    </image>
+    <region>
+      <name>analysis_roi</name>
+      <label>Analysis ROI</label>
+      <description>Region of interest within which the analysis should be done. Must be a four element vector in the format "left, top, width, height" in the space of the base layer. Default value of "-1, -1, -1, -1" indicates that the whole image should be processed.</description>
+      <longflag>analysis_roi</longflag>
+      <default>-1,-1,-1,-1</default>
+    </region>
+    <file fileExtensions=".anot" reference="inputImageFile">
+      <name>outputNucleiAnnotationFile</name>
+      <label>Output Nuclei Annotation File</label>
+      <description>Output nuclei annotation file (*.anot)</description>
+      <channel>output</channel>
+      <index>1</index>
+    </file>
+  </parameters>
+  <parameters>
+    <label>Virtual Trichrome</label>
+    <description>Virtual Trichrome parameters</description>
+    <double>
+      <name>lr</name>
+      <label>lr</label>
+      <description>learning rate</description>
+      <longflag>virtual_trichrome_lr</longflag>
+      <default>0.0002</default>
+    </double>
+    <integer>
+      <name>epochs</name>
+      <label>epochs</label>
+      <description>epochs during training</description>
+      <longflag>virtual_trichrome_epochs</longflag>
+      <default>25</default>
+    </integer>
+    <integer>
+      <name>checkpoint_freq</name>
+      <label>checkpoint_freq</label>
+      <description>checkpoint_freq during training</description>
+      <longflag>virtual_trichrome_checkpoint_freq</longflag>
+      <default>1</default>
+    </integer>
+    <integer>
+      <name>modelsave_freq</name>
+      <label>modelsave_freq</label>
+      <description>modelsave_freq during training</description>
+      <longflag>virtual_trichrome_modelsave_freq</longflag>
+      <default>10</default>
+    </integer>
+    <integer>
+      <name>batchsize</name>
+      <label>batchsize</label>
+      <description>batchsize during training</description>
+      <longflag>virtual_trichrome_batchsize</longflag>
+      <default>1</default>
+    </integer>
+    <integer>
+      <name>lamda</name>
+      <label>lamda</label>
+      <description>lamda during training</description>
+      <longflag>virtual_trichrome_lamda</longflag>
+      <default>100</default>
+    </integer>
+    <string>
+      <name>model</name>
+      <label>model</label>
+      <description>model</description>
+      <longflag>virtual_trichrome_model</longflag>
+      <default>condGAN256</default>
+    </string>
+    <string>
+      <name>dataroot</name>
+      <label>dataroot</label>
+      <description>dataroot</description>
+      <longflag>virtual_trichrome_dataroot</longflag>
+      <default>condGAN256</default>
+    </string>
+    <string>
+      <name>experiment_id</name>
+      <label>experiment_id</label>
+      <description>experiment_id</description>
+      <longflag>virtual_trichrome_experiment_id</longflag>
+      <default>Experiment101</default>
+    </string>
+    <string-enumeration>
+      <name>optimizer</name>
+      <label>optimizer</label>
+      <description>optimizer</description>
+      <channel>input</channel>
+      <longflag>virtual_trichrome_experiment_id</longflag>
+      <element>Adam</element>
+      <element>Adagrad</element>
+      <element>SGD</element>
+      <element>RMSprop</element>
+      <default>Adam</default>
+    </string-enumeration>
+    <string-enumeration>
+      <name>monitor_freq</name>
+      <label>monitor_freq</label>
+      <description>monitor_freq</description>
+      <channel>input</channel>
+      <longflag>virtual_trichrome_monitor_freq</longflag>
+      <element>1epoch</element>
+      <element>5epoch</element>
+      <default>1epoch</default>
+    </string-enumeration>
+  </parameters>
+  <parameters advanced="true">
+    <label>Dask</label>
+    <description>Dask parameters</description>
+    <string>
+      <name>scheduler</name>
+      <label>Scheduler Address</label>
+      <description>Address of a dask scheduler in the format '127.0.0.1:8786'.  Not passing this parameter sets up a dask cluster on the local machine.  'multiprocessing' uses Python multiprocessing.  'multithreading' uses Python multiprocessing in threaded mode.</description>
+      <longflag>scheduler</longflag>
+      <default></default>
+    </string>
+    <integer>
+      <name>num_workers</name>
+      <label>Number of workers</label>
+      <description>Number of dask workers to start while setting up a local cluster internally. If a negative value is specified then the number of workers is set to number of cpu cores on the machine minus the number of workers specified.</description>
+      <longflag>num_workers</longflag>
+      <default>-1</default>
+    </integer>
+    <integer>
+      <name>num_threads_per_worker</name>
+      <label>Number of threads per worker</label>
+      <description>Number of threads to use per worker while setting up a local cluster internally. Must be a positive integer >= 1.</description>
+      <longflag>num_threads_per_worker</longflag>
+      <default>1</default>
+    </integer>
+  </parameters>
+</executable>
