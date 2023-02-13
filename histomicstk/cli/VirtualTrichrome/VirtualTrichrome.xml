@@ -104,7 +104,7 @@
       <label>optimizer</label>
       <description>optimizer</description>
       <channel>input</channel>
-      <longflag>virtual_trichrome_experiment_id</longflag>
+      <longflag>virtual_trichrome_optimizer</longflag>
       <element>Adam</element>
       <element>Adagrad</element>
       <element>SGD</element>
