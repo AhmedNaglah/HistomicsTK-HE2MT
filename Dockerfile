@@ -81,9 +81,9 @@ WORKDIR $htk_path/histomicstk/cli
 # Test our entrypoint.  If we have incompatible versions of numpy and
 # openslide, one of these will fail
 RUN python -m slicer_cli_web.cli_list_entrypoint --list_cli
-RUN python -m slicer_cli_web.cli_list_entrypoint ColorDeconvolution --help
+RUN python -m slicer_cli_web.cli_list_entrypoint VirtualTrichrome --help
 # Debug import time
-RUN python -X importtime ColorDeconvolution/ColorDeconvolution.py --help
+RUN python -X importtime VirtualTrichrome/VirtualTrichrome.py --help
 
 ENV PYTHONUNBUFFERED=TRUE
 
