@@ -26,6 +26,7 @@ g = loaded_model.generator
 print("HERE2")
 
 params = parser.parse_args()
+print(params)
 MODEL = params.model
 INPUTWSI = params.input
 OUTPUTWSI = params.output
