@@ -47,7 +47,7 @@ def main(args):
 
     print('\n>> Output Directory Prints ...\n')
 
-    tmp = args.outputAnnotationFile
+    tmp = args.outputVirtualSlideImage
     tmp = os.path.dirname(tmp)
     print(tmp)
 
