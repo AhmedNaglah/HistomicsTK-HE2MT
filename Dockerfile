@@ -3,9 +3,9 @@
 # dependencies.
 #
 # All plugins of HistomicsTK should derive from this docker image
-
-FROM python:3.8-slim
-LABEL maintainer="Kitware, Inc. <kitware@kitware.com>"
+FROM tensorflow/tensorflow:2.8.0
+#FROM python:3.8-slim
+LABEL maintainer="Ahmed Naglah - University of Florida <ahmed.naglah@ufl.edu>"
 
 
 RUN apt-get update && \
