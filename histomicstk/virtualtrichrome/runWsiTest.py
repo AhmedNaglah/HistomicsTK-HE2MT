@@ -5,8 +5,6 @@ import argparse
 
 import time
 
-print("HERE0")
-
 SIZE = 256
 LAMDA = 200
 LR = 2e-4
@@ -17,34 +15,28 @@ parser.add_argument("--model", type= str, default= './model.h5', help="Model Fil
 parser.add_argument("--inputslide", type= str, default= './input.svs', help="Input WSI")
 parser.add_argument("--outputslide", type= str, default= './output.svs', help="Output WSI")
 
-print("HERE1")
 
 loaded_model = condGAN256()
 loaded_model.compile(optimizer=OPTIMIZER, lamda=LAMDA, learning_rate=LR)
 g = loaded_model.generator
 
-print("HERE2")
-
 params = parser.parse_args()
 print(params)
 MODEL = params.model
-INPUTWSI = params.input
-OUTPUTWSI = params.output
+INPUTWSI = params.inputslide
+OUTPUTWSI = params.outputslide
 
-print("HERE3")
 g.load_weights(filepath=f'{MODEL}')
 
 svspath = INPUTWSI
 print(svspath) 
 s = WSI(svspath)
 dz = s.GetDeepZoomObject()
-print("HERE4")
 
 print(dz.level_count)
 print(dz.tile_count)
 print(dz.level_tiles)
 print(dz.level_dimensions)
-print("HERE5")
 
 def processAllPatches():
     global s, g, OUTPUTWSI
@@ -59,7 +51,6 @@ def processPatch(pnt):
     im_ = TF2CV(im_)
     return im, im_
 
-print("HERE6")
 status = processAllPatches()
 print("\nPrint Status End of Script\n")
 print(status)
