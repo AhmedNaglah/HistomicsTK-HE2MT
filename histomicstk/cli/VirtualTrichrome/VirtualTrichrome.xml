@@ -39,7 +39,7 @@
       <channel>output</channel>
       <index>1</index>
     </file>
-    <file fileExtensions=".svs" reference="inputImageFile">
+    <file fileExtensions=".svs">
       <name>outputVirtualSlideImage</name>
       <label>Output Virtual Slide File</label>
       <description>Output Virtual Slide File (*.svs)</description>

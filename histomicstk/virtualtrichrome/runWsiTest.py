@@ -5,6 +5,8 @@ import argparse
 
 import time
 
+print("HERE0")
+
 SIZE = 256
 LAMDA = 200
 LR = 2e-4
@@ -12,12 +14,16 @@ OPTIMIZER = 'Adam'
 
 parser = argparse.ArgumentParser(description='Naglah Deep Learning - Model Testing CLI')
 parser.add_argument("--model", type= str, default= './model.h5', help="Model File")
-parser.add_argument("--input", type= str, default= './input.svs', help="Input WSI")
-parser.add_argument("--output", type= str, default= './output.svs', help="Output WSI")
+parser.add_argument("--inputslide", type= str, default= './input.svs', help="Input WSI")
+parser.add_argument("--outputslide", type= str, default= './output.svs', help="Output WSI")
+
+print("HERE1")
 
 loaded_model = condGAN256()
 loaded_model.compile(optimizer=OPTIMIZER, lamda=LAMDA, learning_rate=LR)
 g = loaded_model.generator
+
+print("HERE2")
 
 params = parser.parse_args()
 MODEL = params.model

@@ -47,8 +47,8 @@ def main(args):
 
     print('\n>> Output Directory Prints ...\n')
 
-    tmp = args.outputVirtualSlideImage
-    tmp = os.path.dirname(tmp)
+    slidepath = args.outputVirtualSlideImage
+    tmp = os.path.dirname(slidepath)
     print(tmp)
 
     # move to data folder and extract models
@@ -74,7 +74,7 @@ def main(args):
     # os.system('ls -l {}'.format(model.split('model.ckpt')[0]))
 
     # run vis.py with flags
-    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model {} --input {} --output {}".format(model, args.inputImageFile, args.outputVirtualSlideImage)
+    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model {} --inputslide {} --outputslide {}".format(model, args.inputImageFile, slidepath)
     os.system(cmd)
 
 if __name__ == "__main__":
