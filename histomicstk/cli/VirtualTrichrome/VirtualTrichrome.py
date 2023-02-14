@@ -1,25 +1,30 @@
-import json
-import logging
-import os
-import time
-
-import large_image
-import numpy as np
-
-import histomicstk.preprocessing.color_deconvolution as htk_cdeconv
-import histomicstk.preprocessing.color_normalization as htk_cnorm
-import histomicstk.segmentation.label as htk_seg_label
-import histomicstk.segmentation.nuclear as htk_nuclear
-import histomicstk.utils as htk_utils
-from histomicstk.cli import utils as cli_utils
+import os, zipfile, json
 from histomicstk.cli.utils import CLIArgumentParser
-
-logging.basicConfig(level=logging.CRITICAL)
+from glob import glob
 
 def main(args):
-    import dask
 
-    total_start_time = time.time()
+    def get_base_model_name(model_file):
+        try:
+            base_model = model_file.split('.meta')
+            assert len(base_model) == 2
+            base_model = base_model[0]
+        except:
+            try:
+                base_model = model_file.split('.index')
+                assert len(base_model) == 2
+                base_model = base_model[0]
+            except:
+                try:
+                    base_model = model_file.split('.data')
+                    assert len(base_model) == 2
+                    base_model = base_model[0]
+                except:
+                    base_model = model_file
+        return base_model
+
+    cwd = os.getcwd()
+    print(cwd)
 
     print('\n>> CLI Parameters ...\n')
 
@@ -40,33 +45,48 @@ def main(args):
     print("optimizer" + str(args.optimizer))
     print("monitor_freq" + str(args.monitor_freq))
 
-    #
-    # Initiate Dask client
-    #
-    print('\n>> Creating Dask client ...\n')
+    print('\n>> Output Directory Prints ...\n')
 
-    start_time = time.time()
+    tmp = args.outputAnnotationFile
+    tmp = os.path.dirname(tmp)
+    print(tmp)
 
-    c = cli_utils.create_dask_client(args)
+    # move to data folder and extract models
+    os.chdir(tmp)
+    # unpck model files from zipped folder
+    with open(args.inputModelFile, 'rb') as fh:
+        z = zipfile.ZipFile(fh)
+        for name in z.namelist():
+            z.extract(name, tmp)
+    
+    print("\n>>List TMP directory with all files in\n")
+    print(os.listdir(tmp))
+    # get num_classes from json file
+    with open('args.txt', 'rb') as file:
+        trainingDict = json.load(file)
 
-    print(c)
+    print("\n>>Training Dictionary\n")
+    print(trainingDict)
 
-    dask_setup_time = time.time() - start_time
-    print('Dask setup time = {}'.format(
-        cli_utils.disp_time_hms(dask_setup_time)))
+    epochs = trainingDict['epochs']
+    lr = trainingDict['lr']
 
-    #
-    # Read Input Image
-    #
-    print('\n>> Reading input image ... \n')
+    # move back to cli folder
+    os.chdir(cwd)
 
-    ts = large_image.getTileSource(args.inputImageFile)
+    model_files = glob('{}/*.h5*'.format(tmp))
+    print(model_files)
+    model_file = model_files[0]
+    model = get_base_model_name(model_file)
 
-    ts_metadata = ts.getMetadata()
+    # list files code can see
+    # os.system('ls -l {}'.format(model.split('model.ckpt')[0]))
 
-    print(json.dumps(ts_metadata, indent=2))
+    print('\noutput filename: {}\n'.format(args.outputAnnotationFile))
 
+    # run vis.py with flags
+    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model {} --input {} --output {}".format(model, args.inputImageFile, args.outputVirtualSlideImage)
+    os.system(cmd)
 
 if __name__ == "__main__":
-
     main(CLIArgumentParser().parse_args())

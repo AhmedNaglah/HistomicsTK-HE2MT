@@ -18,6 +18,13 @@
       <channel>input</channel>
       <index>0</index>
     </image>
+    <file fileExtensions=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
+      <name>inputModelFile</name>
+      <label>Input Model File - (zip file)</label>
+      <channel>input</channel>
+      <index>1</index>
+      <description>A zip file containing Tensorflow model-files and metadata for the conditional GANs image-to-image translation</description>
+    </file>
     <region>
       <name>analysis_roi</name>
       <label>Analysis ROI</label>
@@ -29,6 +36,13 @@
       <name>outputNucleiAnnotationFile</name>
       <label>Output Nuclei Annotation File</label>
       <description>Output nuclei annotation file (*.anot)</description>
+      <channel>output</channel>
+      <index>1</index>
+    </file>
+    <file fileExtensions=".svs" reference="inputImageFile">
+      <name>outputVirtualSlideImage</name>
+      <label>Output Virtual Slide File</label>
+      <description>Output Virtual Slide File (*.svs)</description>
       <channel>output</channel>
       <index>1</index>
     </file>
