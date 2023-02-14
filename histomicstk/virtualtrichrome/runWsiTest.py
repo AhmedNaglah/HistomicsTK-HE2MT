@@ -15,6 +15,10 @@ parser = argparse.ArgumentParser(description='Naglah Deep Learning - Model Testi
 parser.add_argument("--model", type= str, default= './model.h5', help="Model File")
 parser.add_argument("--inputslide", type= str, default= './input.svs', help="Input WSI")
 parser.add_argument("--outputslide", type= str, default= './output.svs', help="Output WSI")
+parser.add_argument("--xx", type= float, default= 0, help="Output WSI")
+parser.add_argument("--yy", type= float, default= 0, help="Output WSI")
+parser.add_argument("--ww", type= str, default= 0, help="Output WSI")
+parser.add_argument("--ww", type= str, default= 0, help="Output WSI")
 
 
 loaded_model = condGAN256()
@@ -26,10 +30,10 @@ print(params)
 MODEL = params.model
 INPUTWSI = params.inputslide
 OUTPUTWSI = params.outputslide
-x = params.x
-y = params.y
-w = params.w
-h = params.h
+x = int(params.xx)
+y = int(params.yy)
+w = int(params.ww)
+h = int(params.hh)
 
 g.load_weights(filepath=f'{MODEL}')
 
