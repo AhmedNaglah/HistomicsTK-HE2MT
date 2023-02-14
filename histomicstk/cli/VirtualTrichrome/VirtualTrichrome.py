@@ -44,7 +44,7 @@ def main(args):
     print("experiment_id: " + str(args.experiment_id))
     print("optimizer: " + str(args.optimizer))
     print("monitor_freq: " + str(args.monitor_freq))
-
+    print(args.analysis_roi)
     print('\n>> Output Directory Prints ...\n')
 
     slidepath = args.outputVirtualSlideImage
@@ -74,7 +74,7 @@ def main(args):
     # os.system('ls -l {}'.format(model.split('model.ckpt')[0]))
 
     # run vis.py with flags
-    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model '{}' --inputslide '{}' --outputslide '{}'".format(model, args.inputImageFile, slidepath)
+    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model '{}' --inputslide '{}' --outputslide '{}'  ".format(model, args.inputImageFile, slidepath)
     print("\nCalling the main script...\n")
     print(cmd)
     os.system(cmd)
