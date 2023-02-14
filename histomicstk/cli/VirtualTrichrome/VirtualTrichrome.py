@@ -74,7 +74,7 @@ def main(args):
     # os.system('ls -l {}'.format(model.split('model.ckpt')[0]))
 
     # run vis.py with flags
-    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model '{}' --inputslide '{}' --outputslide '{}'  ".format(model, args.inputImageFile, slidepath)
+    cmd = "python3 ../virtualtrichrome/runWsiTest.py --model '{}' --inputslide '{}' --outputslide '{}' --x {} --y {} --w {} --h {} ".format(model, args.inputImageFile, slidepath, args.analysis_roi[0], args.analysis_roi[1], args.analysis_roi[2], args.analysis_roi[3])
     print("\nCalling the main script...\n")
     print(cmd)
     os.system(cmd)

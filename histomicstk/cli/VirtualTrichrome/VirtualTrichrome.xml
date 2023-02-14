@@ -32,17 +32,10 @@
       <longflag>analysis_roi</longflag>
       <default>-1,-1,-1,-1</default>
     </region>
-    <file fileExtensions=".anot" reference="inputImageFile">
-      <name>outputNucleiAnnotationFile</name>
-      <label>Output Nuclei Annotation File</label>
-      <description>Output nuclei annotation file (*.anot)</description>
-      <channel>output</channel>
-      <index>1</index>
-    </file>
-    <file fileExtensions=".svs">
+    <file fileExtensions=".jpg">
       <name>outputVirtualSlideImage</name>
       <label>Output Virtual Slide File</label>
-      <description>Output Virtual Slide File (*.svs)</description>
+      <description>Output Virtual Slide File (*.jpg)</description>
       <channel>output</channel>
       <index>1</index>
     </file>

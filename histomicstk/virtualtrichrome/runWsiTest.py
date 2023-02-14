@@ -2,6 +2,7 @@ from utils.wsi import WSI
 from models.condGAN256 import condGAN256
 from helper import *
 import argparse
+import girder_client
 
 import time
 
@@ -25,6 +26,10 @@ print(params)
 MODEL = params.model
 INPUTWSI = params.inputslide
 OUTPUTWSI = params.outputslide
+x = params.x
+y = params.y
+w = params.w
+h = params.h
 
 g.load_weights(filepath=f'{MODEL}')
 
@@ -38,11 +43,61 @@ print(dz.tile_count)
 print(dz.level_tiles)
 print(dz.level_dimensions)
 
-def processAllPatches():
-    global s, g, OUTPUTWSI
+def patchify(im):
+
+    imgheight=im.shape[0]
+    imgwidth=im.shape[1]
+    size = 256
+
+    cnt_h = imgheight//size+1
+    cnt_w = imgwidth//size+1
+
+    patches = []
+    for y in range(cnt_h):
+        for x in range(cnt_w):
+            try:
+                im_ = im[x*size:(x+1)*size, y*size:(y+1)*size, :]
+            except:
+                im__ = np.zeros((size, size, 3), dtype='uint8') + 255
+                im_ = im[x:, y:, :]
+                a, b, _ = np.shape(im_)
+                im__[:a, :b, :] = im_
+            patches.append()
+    return patches, (cnt_w, cnt_h)
+
+def depatchify(patches, tilemap):
+    (cnt_w, cnt_h) = tilemap
+    size = 256
+    im__ = np.zeros((cnt_w*size, cnt_h*size, 3), dtype='uint8')
+    for y in range(cnt_h):
+        for x in range(cnt_w):
+                im__[x*size:(x+1)*size, y*size:(y+1)*size, :] = patches[y+x*y]
+    return im__
+
+def processROI():
+    global s, g, OUTPUTWSI, x, y, w, h
     # Save do stain transformation and OUTPUTWSI svs
+    im = s.read_patch((x,y), dim=(w,h))
+    patches, tilemap = patchify(im)
+    im_array = []
+    for patch in patches:
+        imtf = AdaptBeforePredict(patch)
+        im_ = g(imtf, training=True)
+        im_ = TF2CV(im_)
+        im_array.append(im_)
+    im_virtual = depatchify(im_array, tilemap)
+    cv2.imwrite(OUTPUTWSI, im_virtual)
+
+    api = "https://athena.rc.ufl.edu/api/v1"
+    user = "ahmednaglah"
+    password = "Netzwork_171819"
+
+    gc = girder_client.GirderClient(apiUrl=api)
+    gc.authenticate(user, password)
+    print("\nAuthentication Done!!!!!!!!!!\n")
+    gc.upload(OUTPUTWSI, "63ebfd83dd96c4f3a1e539f9", "folder", False, False)
     return True
-    
+
 def processPatch(pnt):
     global g 
     im = s.read_patch(pnt)
@@ -51,6 +106,6 @@ def processPatch(pnt):
     im_ = TF2CV(im_)
     return im, im_
 
-status = processAllPatches()
+status = processROI()
 print("\nPrint Status End of Script\n")
 print(status)
