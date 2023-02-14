@@ -61,15 +61,6 @@ def main(args):
     
     print("\n>>List TMP directory with all files in\n")
     print(os.listdir(tmp))
-    # get num_classes from json file
-    with open('args.txt', 'rb') as file:
-        trainingDict = json.load(file)
-
-    print("\n>>Training Dictionary\n")
-    print(trainingDict)
-
-    epochs = trainingDict['epochs']
-    lr = trainingDict['lr']
 
     # move back to cli folder
     os.chdir(cwd)
