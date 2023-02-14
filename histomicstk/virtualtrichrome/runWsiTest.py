@@ -107,5 +107,7 @@ def processPatch(pnt):
     return im, im_
 
 status = processROI()
+print("\nPrint Status End of Script Again\n")
+
 print("\nPrint Status End of Script\n")
 print(status)
