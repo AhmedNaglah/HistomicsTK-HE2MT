@@ -18,7 +18,7 @@ parser.add_argument("--outputslide", type= str, default= './output.svs', help="O
 parser.add_argument("--xx", type= float, default= 0, help="Output WSI")
 parser.add_argument("--yy", type= float, default= 0, help="Output WSI")
 parser.add_argument("--ww", type= str, default= 0, help="Output WSI")
-parser.add_argument("--ww", type= str, default= 0, help="Output WSI")
+parser.add_argument("--hh", type= str, default= 0, help="Output WSI")
 
 
 loaded_model = condGAN256()
