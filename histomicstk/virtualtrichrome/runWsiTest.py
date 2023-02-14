@@ -30,10 +30,10 @@ print(params)
 MODEL = params.model
 INPUTWSI = params.inputslide
 OUTPUTWSI = params.outputslide
-x = int(params.xx)
-y = int(params.yy)
-w = int(params.ww)
-h = int(params.hh)
+x = int(float(params.xx))
+y = int(float(params.yy))
+w = int(float(params.ww))
+h = int(float(params.hh))
 
 g.load_weights(filepath=f'{MODEL}')
 
