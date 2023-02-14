@@ -33,17 +33,17 @@ def main(args):
     if not os.path.isfile(args.inputImageFile):
         raise OSError('Input image file does not exist.')
     
-    print("lr" + str(args.lr))
-    print("epochs" + str(args.epochs))
-    print("checkpoint_freq" + str(args.checkpoint_freq))
-    print("modelsave_freq" + str(args.modelsave_freq))
-    print("batchsize" + str(args.batchsize))
-    print("lamda" + str(args.lamda))
-    print("model" + str(args.model))
-    print("dataroot" + str(args.dataroot))
-    print("experiment_id" + str(args.experiment_id))
-    print("optimizer" + str(args.optimizer))
-    print("monitor_freq" + str(args.monitor_freq))
+    print("lr: " + str(args.lr))
+    print("epochs: " + str(args.epochs))
+    print("checkpoint_freq: " + str(args.checkpoint_freq))
+    print("modelsave_freq: " + str(args.modelsave_freq))
+    print("batchsize: " + str(args.batchsize))
+    print("lamda: " + str(args.lamda))
+    print("model: " + str(args.model))
+    print("dataroot: " + str(args.dataroot))
+    print("experiment_id: " + str(args.experiment_id))
+    print("optimizer: " + str(args.optimizer))
+    print("monitor_freq: " + str(args.monitor_freq))
 
     print('\n>> Output Directory Prints ...\n')
 
@@ -81,8 +81,6 @@ def main(args):
 
     # list files code can see
     # os.system('ls -l {}'.format(model.split('model.ckpt')[0]))
-
-    print('\noutput filename: {}\n'.format(args.outputAnnotationFile))
 
     # run vis.py with flags
     cmd = "python3 ../virtualtrichrome/runWsiTest.py --model {} --input {} --output {}".format(model, args.inputImageFile, args.outputVirtualSlideImage)
