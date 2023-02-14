@@ -66,7 +66,7 @@ def patchify(im):
                 im_ = im[x:, y:, :]
                 a, b, _ = np.shape(im_)
                 im__[:a, :b, :] = im_
-            patches.append()
+            patches.append(im__)
     return patches, (cnt_w, cnt_h)
 
 def depatchify(patches, tilemap):
