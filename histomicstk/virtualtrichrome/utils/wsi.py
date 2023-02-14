@@ -1,6 +1,6 @@
 import os
 #os.add_dll_directory("C:/Users/inagl/Downloads/openslide-win64-20171122/openslide-win64-20171122/bin/")
-os.add_dll_directory("C:/Users/inagl/Desktop/BE544/openslide-win64-20220811/openslide-win64-20220811/bin")
+#os.add_dll_directory("C:/Users/inagl/Desktop/BE544/openslide-win64-20220811/openslide-win64-20220811/bin")
 
 import openslide
 import numpy as np
