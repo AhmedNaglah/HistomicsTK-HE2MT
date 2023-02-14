@@ -19,40 +19,36 @@ loaded_model = condGAN256()
 loaded_model.compile(optimizer=OPTIMIZER, lamda=LAMDA, learning_rate=LR)
 g = loaded_model.generator
 
-try:
-    params = parser.parse_args()
-    MODEL = params.model
-    INPUTWSI = params.input
-    OUTPUTWSI = params.output
+params = parser.parse_args()
+MODEL = params.model
+INPUTWSI = params.input
+OUTPUTWSI = params.output
 
-    g.load_weights(filepath=f'{MODEL}')
+g.load_weights(filepath=f'{MODEL}')
 
-    svspath = INPUTWSI
-    print(svspath) 
-    s = WSI(svspath)
-    dz = s.GetDeepZoomObject()
+svspath = INPUTWSI
+print(svspath) 
+s = WSI(svspath)
+dz = s.GetDeepZoomObject()
 
-    print(dz.level_count)
-    print(dz.tile_count)
-    print(dz.level_tiles)
-    print(dz.level_dimensions)
+print(dz.level_count)
+print(dz.tile_count)
+print(dz.level_tiles)
+print(dz.level_dimensions)
 
-    def processAllPatches():
-        global s, g, OUTPUTWSI
-        # Save do stain transformation and OUTPUTWSI svs
-        return True
-        
-    def processPatch(pnt):
-        global g 
-        im = s.read_patch(pnt)
-        imtf = AdaptBeforePredict(im)
-        im_ = g(imtf, training=True)
-        im_ = TF2CV(im_)
-        return im, im_
+def processAllPatches():
+    global s, g, OUTPUTWSI
+    # Save do stain transformation and OUTPUTWSI svs
+    return True
     
-    status = processAllPatches()
-    print("\nPrint Status End of Script\n")
-    print(status)
+def processPatch(pnt):
+    global g 
+    im = s.read_patch(pnt)
+    imtf = AdaptBeforePredict(im)
+    im_ = g(imtf, training=True)
+    im_ = TF2CV(im_)
+    return im, im_
 
-except:
-    print('Error Code NAGLAH000 - Script Error - Check Parameters')
+status = processAllPatches()
+print("\nPrint Status End of Script\n")
+print(status)
