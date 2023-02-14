@@ -30,17 +30,20 @@ MODEL = params.model
 INPUTWSI = params.input
 OUTPUTWSI = params.output
 
+print("HERE3")
 g.load_weights(filepath=f'{MODEL}')
 
 svspath = INPUTWSI
 print(svspath) 
 s = WSI(svspath)
 dz = s.GetDeepZoomObject()
+print("HERE4")
 
 print(dz.level_count)
 print(dz.tile_count)
 print(dz.level_tiles)
 print(dz.level_dimensions)
+print("HERE5")
 
 def processAllPatches():
     global s, g, OUTPUTWSI
@@ -55,6 +58,7 @@ def processPatch(pnt):
     im_ = TF2CV(im_)
     return im, im_
 
+print("HERE6")
 status = processAllPatches()
 print("\nPrint Status End of Script\n")
 print(status)
