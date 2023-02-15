@@ -78,10 +78,10 @@ def patchify(im):
 def depatchify(patches, tilemap):
     (cnt_w, cnt_h) = tilemap
     size = 256
-    im__ = np.zeros((cnt_w*size, cnt_h*size, 3), dtype='uint8')
+    im__ = np.zeros((cnt_h*size, cnt_w*size, 3), dtype='uint8')
     for y in range(cnt_h):
         for x in range(cnt_w):
-                im__[y*size:(y+1)*size, x*size:(x+1)*size, :] = patches[x+x*y]
+                im__[y*size:(y+1)*size, x*size:(x+1)*size, :] = patches[x*y+x]
     return im__
 
 def processROI():
