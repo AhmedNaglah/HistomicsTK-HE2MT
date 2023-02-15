@@ -94,15 +94,19 @@ def processROI():
     patches, tilemap = patchify(im)
     im_array = []
     ll = len(patches)
+    lll = len(patches[0])
     print(f"\n Processing inference total number of patches {ll}\n")
     for i in range(ll):
-        patch = patches[i]
-        if i%5==0:
-            print(f"progress: {i}/{ll}")
-        imtf = AdaptBeforePredict(patch)
-        im_ = g(imtf, training=True)
-        im_ = TF2CV(im_)
-        im_array.append(im_)
+        im_array_ = []
+        for ii in range(lll):
+            patch = patches[i][ii]
+            if i%5==0:
+                print(f"progress: {i}/{ll}")
+            imtf = AdaptBeforePredict(patch)
+            im_ = g(imtf, training=True)
+            im_ = TF2CV(im_)
+            im_array_.append(im_)
+        im_array.append(im_array_)
     im_virtual = depatchify(im_array, tilemap)
     cv2.imwrite(OUTPUTWSI, im_virtual)
 
