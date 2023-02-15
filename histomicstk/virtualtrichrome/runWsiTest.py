@@ -62,11 +62,11 @@ def patchify(im):
             try:
                 im_ = im[x*size:(x+1)*size, y*size:(y+1)*size, :]
             except:
-                im__ = np.zeros((size, size, 3), dtype='uint8') + 255
-                im_ = im[x:, y:, :]
+                im_ = np.zeros((size, size, 3), dtype='uint8') + 255
+                im__ = im[x:, y:, :]
                 a, b, _ = np.shape(im_)
-                im__[:a, :b, :] = im_
-            patches.append(im__)
+                im_[:a, :b, :] = im__
+            patches.append(im_)
     return patches, (cnt_w, cnt_h)
 
 def depatchify(patches, tilemap):
