@@ -60,10 +60,10 @@ def patchify(im):
     for y in range(cnt_h):
         for x in range(cnt_w):
             try:
-                im_ = im[x*size:(x+1)*size, y*size:(y+1)*size, :]
+                im_ = im[y*size:(y+1)*size, x*size:(x+1)*size, :]
             except:
                 im_ = np.zeros((size, size, 3), dtype='uint8') + 255
-                im__ = im[x:, y:, :]
+                im__ = im[y:, x:, :]
                 a, b, _ = np.shape(im_)
                 im_[:a, :b, :] = im__
             a, b, _ = np.shape(im_)
@@ -81,7 +81,7 @@ def depatchify(patches, tilemap):
     im__ = np.zeros((cnt_w*size, cnt_h*size, 3), dtype='uint8')
     for y in range(cnt_h):
         for x in range(cnt_w):
-                im__[x*size:(x+1)*size, y*size:(y+1)*size, :] = patches[y+x*y]
+                im__[y*size:(y+1)*size, x*size:(x+1)*size, :] = patches[x+x*y]
     return im__
 
 def processROI():
@@ -90,7 +90,12 @@ def processROI():
     im = s.read_patch((x,y), dim=(w,h))
     patches, tilemap = patchify(im)
     im_array = []
-    for patch in patches:
+    ll = len(patches)
+    print(f"\n Processing inference total number of patches {ll}\n")
+    for i in range(ll):
+        patch = patches[i]
+        if i%5==0:
+            print(f"progress: {i}/{ll}")
         imtf = AdaptBeforePredict(patch)
         im_ = g(imtf, training=True)
         im_ = TF2CV(im_)
