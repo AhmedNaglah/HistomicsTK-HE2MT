@@ -2,8 +2,6 @@
 HE2MT Integration with HistomicsTK and Digital Slide Archive
 ================================================
 
-Developed by: Ahmed Naglah
-
 Please cite: 
 
 Naglah, A., Khalifa, F., El-Baz, A. and Gondim, D., 2022. Conditional GANs based system for fibrosis detection and quantification in Hematoxylin and Eosin whole slide images. Medical Image Analysis, 81, p.102537. 
