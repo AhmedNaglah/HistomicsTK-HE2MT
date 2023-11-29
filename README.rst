@@ -9,6 +9,7 @@ Naglah, A., Khalifa, F., El-Baz, A. and Gondim, D., 2022. Conditional GANs based
 See Also
 ---------
 **HE2MT Implementation Conditional GANs based system for fibrosis detection and quantification in Hematoxylin and Eosin whole slide images:**
+
 Source Code 
 
 <https://github.com/AhmedNaglah/HE2MT>
